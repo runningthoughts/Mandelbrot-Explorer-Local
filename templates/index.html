@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mandelbrot Fractal Explorer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Mandelbrot Fractal Explorer</h1>
+	<div id="controls">
+		<table>
+			<tr>
+				<td id="fields" class="vcenter">
+					<div class="control-group">
+						<label for="centerX">Center X:</label>
+						<input type="number" id="centerX" value="-0.5" step="0.01">
+					</div>
+					<div class="control-group">
+						<label for="centerY">Center Y:</label>
+						<input type="number" id="centerY" value="0.0" step="0.01">
+					</div>
+				</td>
+				<td id="nav-buttons">
+					<div id="navigation">
+						<div class="nav-button-row">
+							<button id="upleftButton" onclick="move('upleft')">↖️</button>
+							<button id="upButton" onclick="move('up')">⬆️</button>
+							<button id="uprightButton" onclick="move('upright')">↗️</button>
+						</div>
+						<div class="nav-button-row">
+							<button id="leftButton" onclick="move('left')">⬅️</button>
+							<button id="centerButton" onclick="resetCenter()">&#8857;</button>
+							<button id="rightButton" onclick="move('right')">➡️</button>
+						</div>
+						<div class="nav-button-row">
+							<button id="downleftButton" onclick="move('downleft')">↙️</button>
+							<button id="downButton" onclick="move('down')">⬇️</button>
+							<button id="downrightButton onclick="move('downright')"">↘️</button>
+						</div>
+					</div>
+				</td>
+				<td rowspan="3" style="border: 2px solid white; padding: 4px;">
+					<div class="presets">
+						<img class="preset" src="{{ url_for('static', filename='p1.png') }}" onClick="preset(1)">
+						<img class="preset" src="{{ url_for('static', filename='p2.png') }}" onClick="preset(2)">
+						<img class="preset" src="{{ url_for('static', filename='p3.png') }}" onClick="preset(3)">
+					</div>
+					<div class="presets">
+						<img class="preset" src="{{ url_for('static', filename='p4.png') }}" onClick="preset(4)">
+						<img class="preset" src="{{ url_for('static', filename='p5.png') }}" onClick="preset(5)">
+						<img class="preset" src="{{ url_for('static', filename='p6.png') }}" onClick="preset(6)">
+					</div>
+				</td>
+			</tr>
+			<tr class="vcenter">
+				<td class="vcenter">
+					<div class="control-group">
+						<label for="zoom">Zoom Level:</label>
+						<input type="number" id="zoom" value="1.0" step="0.1" min="0.1">
+					</div>
+				</td>
+				<td id="nav-buttons">
+					<div id="zoom-controls">
+						<button id="zoomOutButton" onclick="zoom('out')">−</button>
+						<button id="resetZoomButton" onclick="resetZoom()">&#x1F50D;</button>
+						<button id="zoomInButton" onclick="zoom('in')">+</button>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+<!--
+					<div class="control-group">
+						<label for="maxIter">Max Iterations (50-1000):</label>
+						<input type="number" id="maxIter" value="200" step="50" min="50" max="1000">
+					</div>
+-->
+					<div class="control-group">
+						<label for="colorMap">Color Map:</label>
+						<select id="colorMap">
+							<option value="viridis">Viridis</option>
+							<option value="plasma">Plasma</option>
+							<option value="inferno">Inferno</option>
+							<option value="magma">Magma</option>
+							<option value="cividis">Cividis</option>
+							<option value="hot">Hot</option>
+							<option value="cool">Cool</option>
+							<option value="autumn">Autumn</option>
+							<option value="seismic">Seismic</option>
+							<option value="BrBG">BrBG</option>
+							<option value="twilight">twilight</option>
+							<option value="nipy_spectral">nipy_spectral</option>
+							<option value="gist_ncar">gist_ncar</option>
+						</select>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<button id="generateButton" onClick="generateFractal()">Generate Fractal</button>
+					<button id="resetButton" onClick="resetValues()">Reset</button>
+				</td>
+				<td></td>
+				<td>
+					<p style="margin: auto; text-align: center"><strong>Presets</strong></p>
+				</td>
+			</tr>
+		</table>
+		<p><em>Play around with the numbers. <strong>The more you zoom in, the more subtle you have to be adjusting X, Y and Zoom levels.</strong> Too much and you may end up zooming in on a blank part of the image. Nudges work better until you get a feel for it.</em></p>
+		
+		<p><em>Note that panning and zooming will automatically cause a regeneration of the Mandelbrot fractal. Only use Generate Fractal if you change the values in the form fields. Also note that, at this time, using presets does not change the zoom factor. It is best to manually adjust the values and click <strong>Generate Fractal</strong>.</em></p>
+	</div>
+	<div id="fractal-container">
+		<img id="fractalImage" src="{{ url_for('static', filename='generating.png') }}" alt="Fractal will appear here">
+	</div>
+	<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
